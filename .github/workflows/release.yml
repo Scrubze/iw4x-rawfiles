@@ -21,12 +21,52 @@ jobs:
           allowUpdates: true
           omitBodyDuringUpdate: true
 
+  # Build iw4x.dll from the vendored Scrubze/iw4x-src submodule at client/.
+  # Same approach as iw4x-src's own release.yml: premake5 vs2022 to generate
+  # solution files, msbuild Release/Win32. Output gets uploaded as a
+  # workflow artifact so the Linux build-artifacts job can pull it in.
+  build-dll:
+    runs-on: windows-2022
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Generate project files
+        working-directory: client
+        run: tools/premake5 vs2022
+
+      - name: Build iw4x.dll
+        working-directory: client
+        run: msbuild /m /v:minimal /p:Configuration=Release /p:Platform=Win32 build/iw4x.sln
+
+      - name: Upload dll
+        uses: actions/upload-artifact@v4
+        with:
+          name: slb-iw4x-dll
+          path: client/build/bin/Win32/Release/iw4x.dll
+
   build-artifacts:
     runs-on: ubuntu-latest
+    needs:
+      - build-dll
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      - name: Download iw4x.dll
+        uses: actions/download-artifact@v4
+        with:
+          name: slb-iw4x-dll
+          # Drops iw4x.dll at the repo root, which is where release.sh
+          # expects to find it alongside iw4x.exe.
+          path: .
 
       - name: Install dependencies
         run: |
