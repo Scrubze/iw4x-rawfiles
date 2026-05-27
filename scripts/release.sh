@@ -27,7 +27,6 @@ $SUDO apt-get install zip curl -y
 
 # Copy artifacts to zip-files dir
 cp -v iw4x.exe $work_dir/temp/zip-files/
-cp -v iw4x.dll $work_dir/temp/zip-files/
 cp -v -r $work_dir/{iw4x,zone} $work_dir/temp/zip-files/
 
 # Copy language fast files
@@ -71,7 +70,7 @@ for iwd in "${iwd_files[@]}"; do
 done
 
 # Move executable files to launcher files
-mv -v $work_dir/temp/zip-files/{iw4x.exe,iw4x.dll,zonebuilder.exe} $work_dir/temp/launcher-files/
+mv -v $work_dir/temp/zip-files/{iw4x.exe,zonebuilder.exe} $work_dir/temp/launcher-files/
 
 # Create launcher zip in launcher-folder with all smaller rawfiles
 pushd $work_dir/temp/zip-files/
