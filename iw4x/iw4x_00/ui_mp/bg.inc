@@ -42,7 +42,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 1
+	forecolor				0.55 0.36 0.97 1
 	background				"mw2_main_background"
 	textscale				0.55
 	visible					when (dvarString( "fs_game" ) == "" && !(dvarBool("cl_ingame") || dvarBool("sv_running")))
@@ -55,7 +55,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 1
+	forecolor				0.55 0.36 0.97 1
 	background				"mw2_main_background"
 	textscale				0.55
 	visible					when (dvarString( "fs_game" ) != "" && !(dvarBool("cl_ingame") || dvarBool("sv_running")))
@@ -86,7 +86,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 0.5
+	forecolor				0.55 0.36 0.97 0.5
 	background				"mw2_main_cloud_overlay"
 	textscale				0.55
 	exp						rect x ((0 - 107 ) - ((float(milliseconds() % 60000 ) / 60000) * (854)))
@@ -99,7 +99,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 0.5
+	forecolor				0.55 0.36 0.97 0.5
 	background				"mw2_main_cloud_overlay"
 	textscale				0.55
 	exp						rect x ((0 - 107 + 854) + ((float(milliseconds() % 50000) / 50000) * (854)))
@@ -130,7 +130,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 0.523696
+	forecolor				0.55 0.36 0.97 0.523696
 	background				"mockup_bg_glow"
 	textscale				0.55
 	exp						forecolor a (((sin(milliseconds() / 1500) + 1) * 0.25) + 0.25)
@@ -143,7 +143,7 @@ itemDef
 	decoration
 	visible					1
 	style					3
-	forecolor				1 1 1 0.476023
+	forecolor				0.55 0.36 0.97 0.476023
 	background				"mockup_bg_glow"
 	textscale				0.55
 	exp						forecolor a (((sin(milliseconds() / 480) + 1) * 0.25) + 0.25)
