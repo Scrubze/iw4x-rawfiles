@@ -1,0 +1,42 @@
+[submodule "client/deps/zlib"]
+	path = client/deps/zlib
+	url = https://github.com/madler/zlib.git
+[submodule "client/deps/libtommath"]
+	path = client/deps/libtommath
+	url = https://github.com/libtom/libtommath.git
+[submodule "client/deps/libtomcrypt"]
+	path = client/deps/libtomcrypt
+	url = https://github.com/libtom/libtomcrypt.git
+[submodule "client/deps/pdcurses"]
+	path = client/deps/pdcurses
+	url = https://github.com/wmcbrine/PDCurses.git
+[submodule "client/deps/mongoose"]
+	path = client/deps/mongoose
+	url = https://github.com/cesanta/mongoose.git
+[submodule "client/deps/protobuf"]
+	path = client/deps/protobuf
+	url = https://github.com/google/protobuf.git
+[submodule "client/deps/udis86"]
+	path = client/deps/udis86
+	url = https://github.com/vmt/udis86.git
+[submodule "client/deps/dxsdk"]
+	path = client/deps/dxsdk
+	url = https://github.com/devKlausS/dxsdk.git
+[submodule "client/deps/GSL"]
+	path = client/deps/GSL
+	url = https://github.com/microsoft/GSL.git
+[submodule "client/deps/json"]
+	path = client/deps/json
+	url = https://github.com/nlohmann/json.git
+[submodule "client/deps/discord-rpc"]
+	path = client/deps/discord-rpc
+	url = https://github.com/discord/discord-rpc.git
+[submodule "client/deps/rapidjson"]
+	path = client/deps/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
+[submodule "client/deps/iw4-open-formats"]
+	path = client/deps/iw4-open-formats
+	url = https://github.com/iw4x/iw4-open-formats.git
+[submodule "client/deps/dualsense-windows"]
+	path = client/deps/dualsense-windows
+	url = https://github.com/Ohjurot/DualSense-Windows.git

@@ -43,12 +43,18 @@ jobs:
   # Build iw4x.dll from the inlined source tree at client/. premake5 vs2022
   # to generate solution files, msbuild Release/Win32. Output gets uploaded
   # as a workflow artifact so the Linux build-artifacts job can pull it in.
+  #
+  # submodules: recursive is needed for client/deps/* (mongoose, protobuf,
+  # udis86, zlib, etc.) -- those are third-party libs pinned as submodules.
+  # The iw4x-src indirection is gone (that source is inlined), but the deps
+  # remain submodules since we never modify them.
   build-dll:
     runs-on: windows-2022
     steps:
       - name: Check out files
         uses: actions/checkout@v4
         with:
+          submodules: recursive
           fetch-depth: 1
 
       - name: Add msbuild to PATH
