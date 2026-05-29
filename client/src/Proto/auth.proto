@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package Proto.Auth;
+
+message Certificate
+{
+	bytes privatekey = 1;
+	bytes token      = 2;
+	bytes ctoken     = 3;
+}
+
+message Connect
+{
+	bytes signature  = 1;
+	bytes publickey  = 2;
+	bytes token      = 3;
+	bytes infostring = 4;
+}
