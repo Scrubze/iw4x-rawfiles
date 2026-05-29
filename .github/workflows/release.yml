@@ -1,22 +1,41 @@
 name: Release
 
+# Every push to main cuts a release. Tag is v0.1.<run_number> -- run_number
+# is a monotonically-increasing per-workflow counter so tags stay ordered
+# even with rapid commits. Bump the "0.1" major.minor by editing this file
+# (or grep for RELEASE_VERSION below) when ready to ship a real version
+# bump alongside the iw4x.dll branding string.
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - main
+  workflow_dispatch:
+
+# If a new commit lands before the current run finishes, cancel the
+# in-flight one so we don't waste a windows-2022 minute on a release we'll
+# immediately supersede.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   OAT_VERSION: "0.21.2"
+  RELEASE_VERSION: "v0.1.${{ github.run_number }}"
 
 jobs:
   create-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v5
       - uses: ncipollo/release-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
+          commit: ${{ github.sha }}
           draft: true
           allowUpdates: true
           omitBodyDuringUpdate: true
@@ -117,6 +136,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag: ${{ env.RELEASE_VERSION }}
+          name: ${{ env.RELEASE_VERSION }}
+          commit: ${{ github.sha }}
           artifacts: "temp/launcher-files/**/*.*,temp/artifact-files/**/*.*"
           artifactErrorsFailBuild: true
           allowUpdates: true
