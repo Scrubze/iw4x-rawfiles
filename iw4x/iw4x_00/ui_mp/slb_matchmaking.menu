@@ -1,0 +1,167 @@
+// SLB matchmaking lobby page. Frontend-only -- driven by four dvars that
+// the main menu sets when 1V1 / 4V4 is clicked. Later a backend (HTTP
+// polling from iw4x.dll or pushed via a tcp/named-pipe to the launcher)
+// will populate `slb_queue_size` live; for now it's whatever the open
+// action sets it to.
+//
+//   slb_queue_type   -- string, e.g. "4V4 SNIPERS ONLY"
+//   slb_queue_size   -- int, players currently in queue
+//   slb_queue_max    -- int, target queue size (8 = 4v4, 2 = 1v1)
+//   slb_queue_status -- string, e.g. "SEARCHING" / "READY" / "JOINING"
+
+#define MENU_NAME "slb_matchmaking"
+
+#include "ui/menudef.h"
+#include "ui_mp/common_macro.inc"
+
+{
+	menuDef
+	{
+		name						MENU_NAME
+		rect						0 0 640 480
+		focuscolor					1 1 1 1
+		style						1
+		soundLoop					"music_mainmenu_mp"
+		fullScreen					1
+
+		onESC
+		{
+			close self;
+		}
+
+		// --- Background (matches the rebranded purple main menu) ----------
+		#define BACKGROUND_IW4
+		#include "ui_mp/bg.inc"
+
+		// --- Title: "FINDING MATCH" --------------------------------------
+		itemDef
+		{
+			name					"title"
+			rect					0 100 640 36 4 4
+			decoration
+			visible					1
+			forecolor				1 1 1 1
+			textalign				5
+			textfont				6
+			textscale				0.7
+			text					"FINDING MATCH"
+		}
+
+		// --- Queue type (e.g. "4V4 SNIPERS ONLY") in accent purple -------
+		itemDef
+		{
+			name					"queue_type"
+			rect					0 150 640 24 4 4
+			decoration
+			visible					1
+			forecolor				0.7 0.55 1 1
+			textalign				5
+			textfont				9
+			textscale				0.45
+			exp						text ( dvarString("slb_queue_type") )
+		}
+
+		// --- Big player count: "X / Y" -----------------------------------
+		itemDef
+		{
+			name					"player_count"
+			rect					0 220 640 50 4 4
+			decoration
+			visible					1
+			forecolor				1 1 1 1
+			textalign				5
+			textfont				6
+			textscale				1.4
+			exp						text ( dvarString("slb_queue_size") + " / " + dvarString("slb_queue_max") )
+		}
+
+		// --- "PLAYERS IN QUEUE" caption ----------------------------------
+		itemDef
+		{
+			rect					0 275 640 20 4 4
+			decoration
+			visible					1
+			forecolor				0.75 0.7 0.85 1
+			textalign				5
+			textfont				9
+			textscale				0.3
+			text					"PLAYERS IN QUEUE"
+		}
+
+		// --- Status line: "SEARCHING" + animated trailing dots ----------
+		// Pattern lifted from connect.menu -- 4 itemDefs each visible
+		// during a different quarter of the sin() cycle.
+		itemDef
+		{
+			rect					0 335 640 20 4 4
+			decoration
+			visible					1
+			forecolor				1 1 1 0.65
+			textalign				5
+			textfont				9
+			textscale				0.35
+			text					"SEARCHING"
+		}
+		itemDef
+		{
+			rect					56 335 20 20 4 4
+			decoration
+			forecolor				1 1 1 0.65
+			textalign				4
+			textfont				9
+			textscale				0.35
+			visible					when ( ( sin( milliseconds() * 0.005 ) + 1 ) * 0.5 > 0.25 )
+			text					"."
+		}
+		itemDef
+		{
+			rect					56 335 20 20 4 4
+			decoration
+			forecolor				1 1 1 0.65
+			textalign				4
+			textfont				9
+			textscale				0.35
+			visible					when ( ( sin( milliseconds() * 0.005 ) + 1 ) * 0.5 > 0.5 )
+			text					".."
+		}
+		itemDef
+		{
+			rect					56 335 20 20 4 4
+			decoration
+			forecolor				1 1 1 0.65
+			textalign				4
+			textfont				9
+			textscale				0.35
+			visible					when ( ( sin( milliseconds() * 0.005 ) + 1 ) * 0.5 > 0.75 )
+			text					"..."
+		}
+
+		// --- CANCEL button (returns to main menu) -----------------------
+		itemDef
+		{
+			name					"cancel_button"
+			text					"CANCEL"
+			type					1
+			style					0
+			rect					-80 410 160 22 4 4
+			forecolor				0.75 0.7 0.85 1
+			focuscolor				1 1 1 1
+			textalign				5
+			textfont				6
+			textscale				0.42
+			visible					1
+			mouseEnter
+			{
+				setItemColor self forecolor 1 1 1 1;
+			}
+			mouseExit
+			{
+				setItemColor self forecolor 0.75 0.7 0.85 1;
+			}
+			action
+			{
+				close self;
+			}
+		}
+	}
+}

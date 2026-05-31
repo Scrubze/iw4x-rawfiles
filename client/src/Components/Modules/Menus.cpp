@@ -1581,6 +1581,7 @@ namespace Components
 		Add("ui_mp/popup_friends.menu");
 		Add("ui_mp/resetclass.menu");
 		Add("ui_mp/security_increase_popmenu.menu");
+		Add("ui_mp/slb_matchmaking.menu");
 		Add("ui_mp/startup_messages.menu");
 		Add("ui_mp/stats_reset.menu");
 		Add("ui_mp/stats_unlock.menu");
